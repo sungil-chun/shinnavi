@@ -5,8 +5,7 @@
   "body": [
     {
       "type": "Image",
-      "url" : "file:///C:/shinnavi/bot-shinnavi-134252-src/image/navi.jpg",
-      //"url": "file:///localhost:3978/image/navi.jpg",
+      "url": "http://www.lgcard.com/images/person/assets/img/obj/cha3.png",
       "size": "stretch"
     },
     {
