@@ -231,7 +231,6 @@ namespace Microsoft.BotBuilderSamples
 
                         case DialogTurnStatus.Complete:
                             await dc.EndDialogAsync();
-
                             break;
 
                         default:
