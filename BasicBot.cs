@@ -157,9 +157,6 @@ namespace Microsoft.BotBuilderSamples
                                     {
                                         if(bFundEntities == true)
                                         {
-
-
-
                                             var response = activity.CreateReply();
                                             var actions = new List<CardAction>();
                                             actions.Add(new CardAction() { Title = "펀드 매수 화면 웹연결", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/newBuy/view.do#!", Type = ActionTypes.OpenUrl});
