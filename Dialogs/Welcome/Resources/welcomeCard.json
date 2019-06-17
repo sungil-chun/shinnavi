@@ -5,7 +5,8 @@
   "body": [
     {
       "type": "Image",
-      "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtB3AwMUeNoq4gUBGe6Ocj8kyh3bXa9ZbV7u1fVKQoyKFHdkqU",
+      "url" : "file:///C:/shinnavi/bot-shinnavi-134252-src/image/navi.jpg",
+      //"url": "file:///localhost:3978/image/navi.jpg",
       "size": "stretch"
     },
     {
@@ -13,34 +14,35 @@
       "spacing": "medium",
       "size": "default",
       "weight": "bolder",
-      "text": "Welcome to Bot jjj!",
+      "text": "환영합니다. 저는 신나비입니다!",
       "wrap": true,
       "maxLines": 0
     },
     {
       "type": "TextBlock",
+      "spacing": "medium",
       "size": "default",
       "isSubtle": "yes",
-      "text": "Now that you have successfully run your bot, follow the links in this Adaptive Card to expand your knowledge of Bot Framework.",
+      "text": "저에게 원하시는 업무를 말씀해주세요! 업무를 하실 수 있는 페이지로 안내해 드릴게요",
       "wrap": true,
       "maxLines": 0
     }
   ],
   "actions": [
     {
-      "type": "Action.OpenUrl",
-      "title": "Get an overview",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
+      "type": "Action.Submit",
+      "title": "펀드",
+      "data": "펀드"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Ask a question",
-      "url": "https://stackoverflow.com/questions/tagged/botframework"
+      "type": "Action.Submit",
+      "title": "금융상품",
+      "data": "금융상품"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Learn how to deploy",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-deploy-azure?view=azure-bot-service-4.0"
+      "type": "Action.Submit",
+      "title": "뱅킹/업무",
+      "data": "뱅킹업무"
     }
   ]
 }

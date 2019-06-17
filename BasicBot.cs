@@ -12,9 +12,14 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using MySql.Data;
+using MySql.Data.MySqlClient;
+using System.Data;
+//using System.Data;
 
 namespace Microsoft.BotBuilderSamples
 {
+    
     /// <summary>
     /// Main entry point and orchestration for bot.
     /// </summary>
@@ -22,9 +27,15 @@ namespace Microsoft.BotBuilderSamples
     {
         // Supported LUIS Intents
         public const string GreetingIntent = "Greeting";
-        public const string CancelIntent = "Cancel";
+        public const string CancelIntent = "cancel";
         public const string HelpIntent = "Help";
         public const string NoneIntent = "None";
+        public const string FundIntent = "펀드";
+        public const string BuyIntent = "buy";
+        public const string SearchIntent = "search";
+        public const string RecommendIntent = "recommend";
+        public static string url = "";
+
 
         /// <summary>
         /// Key in the bot config (.bot file) for the LUIS instance.
@@ -92,7 +103,7 @@ namespace Microsoft.BotBuilderSamples
                 await UpdateGreetingState(luisResults, dc.Context);
 
                 // Handle conversation interrupts first.
-                var interrupted = await IsTurnInterruptedAsync(dc, topIntent);
+                var interrupted = await IsTurnInterruptedAsync(dc, topIntent);  //여기서 cancel인지 파악
                 if (interrupted)
                 {
                     // Bypass the dialog.
@@ -108,6 +119,9 @@ namespace Microsoft.BotBuilderSamples
                 // if no one has responded,
                 if (!dc.Context.Responded)
                 {
+                    //var entities = luisResults.Entities;
+                    bool bFundEntities = CheckFundEntities(luisResults, dc.Context);
+
                     // examine results from active dialog
                     switch (dialogResult.Status)
                     {
@@ -115,19 +129,102 @@ namespace Microsoft.BotBuilderSamples
                             switch (topIntent)
                             {
                                 case GreetingIntent:
-                                    await dc.BeginDialogAsync(nameof(GreetingDialog));
+                                    //await dc.BeginDialogAsync(nameof(GreetingDialog));
+                                    //break;
+                                    var welcomeCard = CreateAdaptiveCardAttachment();
+                                    var response11 = CreateResponse(activity, welcomeCard);
+                                    await dc.Context.SendActivityAsync(response11);
                                     break;
+                                case FundIntent:
+                                    {
+                                        var response = activity.CreateReply();
+                                        var actions = new List<CardAction>();
+                                        //actions.Add(new CardAction() { Title = "매수", Value = "http://www.shinhaninvest.com", Type = ActionTypes.OpenUrl});
+                                        actions.Add(new CardAction() { Title = "매수", Value = "펀드 매수", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "매도", Value = "펀드 매도", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "잔고", Value = "펀드 잔고", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "검색", Value = "펀드 검색", Type = ActionTypes.ImBack });
+                                        response.Attachments.Add(
+                                            new HeroCard
+                                            {
+                                                Title = "원하는 펀드 메뉴를 선택해주세요!",
+                                                Buttons = actions,
+                                            }.ToAttachment());
+                                        await dc.Context.SendActivityAsync(response);
+                                    }
+                                    break;
+                                case BuyIntent:
+                                    {
+                                        if(bFundEntities == true)
+                                        {
+                                            var response = activity.CreateReply();
+                                            var actions = new List<CardAction>();
+                                            actions.Add(new CardAction() { Title = "펀드 매수 화면 웹연결", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/newBuy/view.do#!", Type = ActionTypes.OpenUrl});
+                                            response.Attachments.Add(
+                                                new HeroCard
+                                                {
+                                                    Title = "펀드 매수 화면번호는 1000번입니다.",
+                                                    Buttons = actions,
+                                                }.ToAttachment());
+                                            await dc.Context.SendActivityAsync(response);
+                                        }
+                                        else
+                                            await dc.Context.SendActivityAsync("매수상품을 알려주세요");
+                                    }
+                                    break;
+                                case SearchIntent:
+                                    {
+                                        SelectUsingAdapter("select * from mapping_table where intent =\"search\"");
+                                        if (bFundEntities == true)
+                                        {
+                                            var response = activity.CreateReply();
+                                            var actions = new List<CardAction>();
+                                            var askSentence = turnContext.Activity.Text;
 
+                                            //actions.Add(new CardAction() { Title = "펀드 검색 화면으로 가기", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/search-detail/view.do", Type = ActionTypes.OpenUrl });
+                                            actions.Add(new CardAction() { Title = "펀드 검색 화면으로 가기", Value = url, Type = ActionTypes.OpenUrl });
+                                            response.Attachments.Add(
+                                                new HeroCard
+                                                {
+                                                    Title = "나에게 딱 어울리는 펀드를 찾아보세요!",
+                                                    Buttons = actions,
+                                                }.ToAttachment());
+                                            await dc.Context.SendActivityAsync(response);
+                                        }
+                                        else
+                                            await dc.Context.SendActivityAsync("어떤걸 검색해 드릴까요 ?");
+                                    }
+                                    break;
+                                case RecommendIntent:
+                                    {
+                                        if (bFundEntities == true)
+                                        {
+                                            var response = activity.CreateReply();
+                                            var actions = new List<CardAction>();
+                                            var askSentence = turnContext.Activity.Text;
+
+                                            actions.Add(new CardAction() { Title = "펀드 추천 화면으로 가기", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/000101/view.do", Type = ActionTypes.OpenUrl });
+                                            response.Attachments.Add(
+                                                new HeroCard
+                                                {
+                                                    Title = "신한금융투자가 추천해드리는 펀드!",
+                                                    Buttons = actions,
+                                                }.ToAttachment());
+                                            await dc.Context.SendActivityAsync(response);
+                                        }
+                                        else
+                                            await dc.Context.SendActivityAsync("어떤걸 추천해 드릴까요 ?");
+                                    }
+                                    break;
                                 case NoneIntent:
                                 default:
                                     // Help or no intent identified, either way, let's provide some help.
                                     // to the user
-                                    await dc.Context.SendActivityAsync("I didn't understand what you just said to me.");
+                                    await dc.Context.SendActivityAsync("준비중입니다 :)");
                                     break;
                             }
 
                             break;
-
                         case DialogTurnStatus.Waiting:
                             // The active dialog is waiting for a response from the user, so do nothing.
                             break;
@@ -266,5 +363,47 @@ namespace Microsoft.BotBuilderSamples
                 await _greetingStateAccessor.SetAsync(turnContext, greetingState);
             }
         }
+
+        private bool CheckFundEntities(RecognizerResult luisResult, ITurnContext turnContext)
+        {
+            var entities = luisResult.Entities;
+
+            // Supported LUIS Entities
+            string[] fundEnties = { "상품" };
+
+            foreach (var fund in fundEnties)
+            {
+                // Check if we found valid slot values in entities returned from LUIS.
+                if (entities[fund] != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static void SelectUsingAdapter(string sql)
+        {
+            DataSet ds = new DataSet();
+            string connStr = "Server=db-shinnavi-mysql.mysql.database.azure.com;Database=shinnavi;Uid=admin1@db-shinnavi-mysql;Pwd=a123456#;Charset=utf8";
+
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {
+                //MySqlDataAdapter 클래스를 이용하여
+                //비연결 모드로 데이타 가져오기
+                //string sql = "SELECT * FROM Tab1 WHERE Id>=2";
+                MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
+                adpt.Fill(ds, "mapping_table");
+            }
+
+            foreach (DataRow r in ds.Tables[0].Rows)
+            {
+                url = (string)r["url"];               
+                //Console.WriteLine(r["intent"]);
+            }
+        }
+
     }
+    
 }

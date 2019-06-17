@@ -13,7 +13,7 @@
       "spacing": "medium",
       "size": "default",
       "weight": "bolder",
-      "text": "Welcome to Bot Framework!",
+      "text": "환영합니다. 저는 신나비입니다!",
       "wrap": true,
       "maxLines": 0
     },
@@ -21,26 +21,26 @@
       "type": "TextBlock",
       "size": "default",
       "isSubtle": "yes",
-      "text": "Now that you have successfully run your bot, follow the links in this Adaptive Card to expand your knowledge of Bot Framework.",
+      "text": "저에게 원하시는 업무를 말씀해주세요! 업무를 하실 수 있는 페이지로 안내해 드릴게요",
       "wrap": true,
       "maxLines": 0
     }
   ],
   "actions": [
     {
-      "type": "Action.OpenUrl",
-      "title": "Get an overview",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
+      "type": "ActionTypes.ImBack",
+      "title": "펀드",
+      "value": "펀드"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Ask a question",
-      "url": "https://stackoverflow.com/questions/tagged/botframework"
+      "type": "ActionTypes.ImBack",
+      "title": "뱅킹/업무",
+      "value": "뱅킹업무"
     },
     {
-      "type": "Action.OpenUrl",
-      "title": "Learn how to deploy",
-      "url": "https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-deploy-azure?view=azure-bot-service-4.0"
+      "type": "ActionTypes.ImBack",
+      "title": "금융상품",
+      "value": "금융상품"
     }
   ]
 }

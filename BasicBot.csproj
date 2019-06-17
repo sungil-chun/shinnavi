@@ -3,7 +3,22 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <CodeAnalysisRuleSet>BasicBot.ruleset</CodeAnalysisRuleSet>
+    <UserSecretsId>5b000b7e-f50c-482d-aad4-d3368c1fc7a5</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Dialogs\Welcome\Resources\welcomeCard.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Dialogs\Welcome\Resources\navi.jpg" />
+    <None Remove="image\navi.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Dialogs\Welcome\Resources\welcomeCard.json" />
+    <EmbeddedResource Include="image\navi.jpg" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
@@ -19,6 +34,7 @@
     <PackageReference Include="Microsoft.Bot.Connector" Version="4.1.5" />
     <PackageReference Include="Microsoft.Bot.Schema" Version="4.1.5" />
     <PackageReference Include="Microsoft.Graph" Version="1.10.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.16" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta008">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -37,4 +53,5 @@
 
   <Import Project="PostDeployScripts\IncludeSources.targets" Condition="Exists('PostDeployScripts\IncludeSources.targets')" />
   <Import Project="..\PostDeployScripts\IncludeSources.targets" Condition="Exists('..\PostDeployScripts\IncludeSources.targets')" />
+  <ProjectExtensions><VisualStudio><UserProperties Dialogs_4Welcome_4Resources_4welcomeCard_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
 </Project>
