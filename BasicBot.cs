@@ -164,8 +164,6 @@ namespace Microsoft.BotBuilderSamples
                                                 new HeroCard
                                                 {
                                                     Title = "펀드 매수 화면번호는 1000번입니다.",
-
-
                                                     Buttons = actions,
                                                 }.ToAttachment());
                                             await dc.Context.SendActivityAsync(response);
