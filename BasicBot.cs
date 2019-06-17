@@ -170,6 +170,7 @@ namespace Microsoft.BotBuilderSamples
                                         }
                                         else
                                             await dc.Context.SendActivityAsync("매수상품을 알려주세요");
+
                                     }
                                     break;
                                 case SearchIntent:
@@ -231,6 +232,7 @@ namespace Microsoft.BotBuilderSamples
 
                         case DialogTurnStatus.Complete:
                             await dc.EndDialogAsync();
+
                             break;
 
                         default:
