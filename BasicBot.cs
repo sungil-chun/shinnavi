@@ -249,8 +249,10 @@ namespace Microsoft.BotBuilderSamples
                     {
                         // Greet anyone that was not the target (recipient) of this message.
                         // To learn more about Adaptive Cards, see https://aka.ms/msbot-adaptivecards for more details.
-                        if (member.Id != activity.Recipient.Id)
+                        if (member.Id == activity.Recipient.Id)
                         {
+
+                            
                             var welcomeCard = CreateAdaptiveCardAttachment();
                             var response = CreateResponse(activity, welcomeCard);
                             await dc.Context.SendActivityAsync(response);
