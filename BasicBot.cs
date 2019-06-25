@@ -35,11 +35,11 @@ namespace Microsoft.BotBuilderSamples
         public const string CancelIntent = "cancel";
         public const string HelpIntent = "Help";
         public const string NoneIntent = "None";
-        public const string FundIntent = "Æİµå";
+        public const string FundIntent = "í€ë“œ";
         public const string BuyIntent = "buy";
         public const string SearchIntent = "search";
         public const string RecommendIntent = "recommend";
-        public const string Shinhani = "½ÅÇÑ¾ÆÀÌ";
+        public const string Shinhani = "ì‹ í•œì•„ì´";
         public static string url = "";
         public int WM_COPYDATA = 0x004A;
 
@@ -76,7 +76,7 @@ namespace Microsoft.BotBuilderSamples
 
             public static extern int PostMessage(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam);
 
-            // lParam ºÎºĞÀ» ref COPYDATASTRUCT·Î ¹Ù²Ù¾î overloadingÇÏ´Â ¹æ¹ıµµ ÀÖÁö¸¸ ¾Æ·¡ MarshalingÀ» ¾²¸é ±»ÀÌ ±×·² ÇÊ¿ä ¾ø´Ù.
+            // lParam ë¶€ë¶„ì„ ref COPYDATASTRUCTë¡œ ë°”ê¾¸ì–´ overloadingí•˜ëŠ” ë°©ë²•ë„ ìˆì§€ë§Œ ì•„ë˜ Marshalingì„ ì“°ë©´ êµ³ì´ ê·¸ëŸ´ í•„ìš” ì—†ë‹¤.
 
 
 
@@ -105,13 +105,13 @@ namespace Microsoft.BotBuilderSamples
 
         public struct COPYDATASTRUCT
 
-        { // Win32 APIÀÇ ±×°Í°ú ºñ½ÁÇÏ°Ô ¼±¾ğ
+        { // Win32 APIì˜ ê·¸ê²ƒê³¼ ë¹„ìŠ·í•˜ê²Œ ì„ ì–¸
 
             public IntPtr dwData;
 
             public int cbData;
 
-            public IntPtr lpData; // IntPtr°¡ LPVOID ¿ªÇÒÀ» ÇÑ´Ù.
+            public IntPtr lpData; // IntPtrê°€ LPVOID ì—­í• ì„ í•œë‹¤.
 
         }
 
@@ -169,7 +169,7 @@ namespace Microsoft.BotBuilderSamples
                 await UpdateGreetingState(luisResults, dc.Context);
 
                 // Handle conversation interrupts first.
-                var interrupted = await IsTurnInterruptedAsync(dc, topIntent);  //¿©±â¼­ cancelÀÎÁö ÆÄ¾Ç
+                var interrupted = await IsTurnInterruptedAsync(dc, topIntent);  //ì—¬ê¸°ì„œ cancelì¸ì§€ íŒŒì•…
                 if (interrupted)
                 {
                     // Bypass the dialog.
@@ -205,15 +205,15 @@ namespace Microsoft.BotBuilderSamples
                                     {
                                         var response = activity.CreateReply();
                                         var actions = new List<CardAction>();
-                                        //actions.Add(new CardAction() { Title = "¸Å¼ö", Value = "http://www.shinhaninvest.com", Type = ActionTypes.OpenUrl});
-                                        actions.Add(new CardAction() { Title = "¸Å¼ö", Value = "Æİµå ¸Å¼ö", Type = ActionTypes.ImBack });
-                                        actions.Add(new CardAction() { Title = "¸Åµµ", Value = "Æİµå ¸Åµµ", Type = ActionTypes.ImBack });
-                                        actions.Add(new CardAction() { Title = "ÀÜ°í", Value = "Æİµå ÀÜ°í", Type = ActionTypes.ImBack });
-                                        actions.Add(new CardAction() { Title = "°Ë»ö", Value = "Æİµå °Ë»ö", Type = ActionTypes.ImBack });
+                                        //actions.Add(new CardAction() { Title = "ë§¤ìˆ˜", Value = "http://www.shinhaninvest.com", Type = ActionTypes.OpenUrl});
+                                        actions.Add(new CardAction() { Title = "ë§¤ìˆ˜", Value = "í€ë“œ ë§¤ìˆ˜", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "ë§¤ë„", Value = "í€ë“œ ë§¤ë„", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "ì”ê³ ", Value = "í€ë“œ ì”ê³ ", Type = ActionTypes.ImBack });
+                                        actions.Add(new CardAction() { Title = "ê²€ìƒ‰", Value = "í€ë“œ ê²€ìƒ‰", Type = ActionTypes.ImBack });
                                         response.Attachments.Add(
                                             new HeroCard
                                             {
-                                                Title = "¿øÇÏ´Â Æİµå ¸Ş´º¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä!",
+                                                Title = "ì›í•˜ëŠ” í€ë“œ ë©”ë‰´ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”!",
                                                 Buttons = actions,
                                             }.ToAttachment());
                                         await dc.Context.SendActivityAsync(response);
@@ -225,18 +225,18 @@ namespace Microsoft.BotBuilderSamples
                                         {
                                             var response = activity.CreateReply();
                                             var actions = new List<CardAction>();
-                                            actions.Add(new CardAction() { Title = "Æİµå ¸Å¼ö È­¸é À¥¿¬°á", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/newBuy/view.do#!", Type = ActionTypes.OpenUrl});
-                                            actions.Add(new CardAction() { Title = "½ÅÇÑ¾ÆÀÌ¿¬°á", Value = "½ÅÇÑ¾ÆÀÌ", Type = ActionTypes.ImBack });
+                                            actions.Add(new CardAction() { Title = "í€ë“œ ë§¤ìˆ˜ í™”ë©´ ì›¹ì—°ê²°", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/newBuy/view.do#!", Type = ActionTypes.OpenUrl});
+                                            actions.Add(new CardAction() { Title = "ì‹ í•œì•„ì´ì—°ê²°", Value = "ì‹ í•œì•„ì´", Type = ActionTypes.ImBack });
                                             response.Attachments.Add(
                                                 new HeroCard
                                                 {
-                                                    Title = "Æİµå ¸Å¼ö È­¸é¹øÈ£´Â 5861¹øÀÔ´Ï´Ù.",
+                                                    Title = "í€ë“œ ë§¤ìˆ˜ í™”ë©´ë²ˆí˜¸ëŠ” 5861ë²ˆì…ë‹ˆë‹¤.",
                                                     Buttons = actions,
                                                 }.ToAttachment());
                                             await dc.Context.SendActivityAsync(response);
                                         }
                                         else
-                                            await dc.Context.SendActivityAsync("¸Å¼ö»óÇ°À» ¾Ë·ÁÁÖ¼¼¿ä");
+                                            await dc.Context.SendActivityAsync("ë§¤ìˆ˜ìƒí’ˆì„ ì•Œë ¤ì£¼ì„¸ìš”");
                                     }
                                     break;
                                 case Shinhani:
@@ -253,18 +253,18 @@ namespace Microsoft.BotBuilderSamples
                                             var actions = new List<CardAction>();
                                             var askSentence = turnContext.Activity.Text;
 
-                                            //actions.Add(new CardAction() { Title = "Æİµå °Ë»ö È­¸éÀ¸·Î °¡±â", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/search-detail/view.do", Type = ActionTypes.OpenUrl });
-                                            actions.Add(new CardAction() { Title = "Æİµå °Ë»ö È­¸éÀ¸·Î °¡±â", Value = url, Type = ActionTypes.OpenUrl });
+                                            //actions.Add(new CardAction() { Title = "í€ë“œ ê²€ìƒ‰ í™”ë©´ìœ¼ë¡œ ê°€ê¸°", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/search-detail/view.do", Type = ActionTypes.OpenUrl });
+                                            actions.Add(new CardAction() { Title = "í€ë“œ ê²€ìƒ‰ í™”ë©´ìœ¼ë¡œ ê°€ê¸°", Value = url, Type = ActionTypes.OpenUrl });
                                             response.Attachments.Add(
                                                 new HeroCard
                                                 {
-                                                    Title = "³ª¿¡°Ô µü ¾î¿ï¸®´Â Æİµå¸¦ Ã£¾Æº¸¼¼¿ä!",
+                                                    Title = "ë‚˜ì—ê²Œ ë”± ì–´ìš¸ë¦¬ëŠ” í€ë“œë¥¼ ì°¾ì•„ë³´ì„¸ìš”!",
                                                     Buttons = actions,
                                                 }.ToAttachment());
                                             await dc.Context.SendActivityAsync(response);
                                         }
                                         else
-                                            await dc.Context.SendActivityAsync("¾î¶²°É °Ë»öÇØ µå¸±±î¿ä ?");
+                                            await dc.Context.SendActivityAsync("ì–´ë–¤ê±¸ ê²€ìƒ‰í•´ ë“œë¦´ê¹Œìš” ?");
                                     }
                                     break;
                                 case RecommendIntent:
@@ -275,24 +275,24 @@ namespace Microsoft.BotBuilderSamples
                                             var actions = new List<CardAction>();
                                             var askSentence = turnContext.Activity.Text;
 
-                                            actions.Add(new CardAction() { Title = "Æİµå ÃßÃµ È­¸éÀ¸·Î °¡±â", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/000101/view.do", Type = ActionTypes.OpenUrl });
+                                            actions.Add(new CardAction() { Title = "í€ë“œ ì¶”ì²œ í™”ë©´ìœ¼ë¡œ ê°€ê¸°", Value = "https://www.shinhaninvest.com/siw/wealth-management/fund/000101/view.do", Type = ActionTypes.OpenUrl });
                                             response.Attachments.Add(
                                                 new HeroCard
                                                 {
-                                                    Title = "½ÅÇÑ±İÀ¶ÅõÀÚ°¡ ÃßÃµÇØµå¸®´Â Æİµå!",
+                                                    Title = "ì‹ í•œê¸ˆìœµíˆ¬ìê°€ ì¶”ì²œí•´ë“œë¦¬ëŠ” í€ë“œ!",
                                                     Buttons = actions,
                                                 }.ToAttachment());
                                             await dc.Context.SendActivityAsync(response);
                                         }
                                         else
-                                            await dc.Context.SendActivityAsync("¾î¶²°É ÃßÃµÇØ µå¸±±î¿ä ?");
+                                            await dc.Context.SendActivityAsync("ì–´ë–¤ê±¸ ì¶”ì²œí•´ ë“œë¦´ê¹Œìš” ?");
                                     }
                                     break;
                                 case NoneIntent:
                                 default:
                                     // Help or no intent identified, either way, let's provide some help.
                                     // to the user
-                                    await dc.Context.SendActivityAsync("ÁØºñÁßÀÔ´Ï´Ù :)");
+                                    await dc.Context.SendActivityAsync("ì¤€ë¹„ì¤‘ì…ë‹ˆë‹¤ :)");
                                     break;
                             }
 
@@ -441,7 +441,7 @@ namespace Microsoft.BotBuilderSamples
             var entities = luisResult.Entities;
 
             // Supported LUIS Entities
-            string[] fundEnties = { "»óÇ°" };
+            string[] fundEnties = { "ìƒí’ˆ" };
 
             foreach (var fund in fundEnties)
             {
@@ -457,7 +457,7 @@ namespace Microsoft.BotBuilderSamples
 
         public bool SendMessageToDll(int nMapNum)
         {
-            IntPtr hwndRcvr = Win32.FindWindow(null, "ReceiverWindow"); // ReceiverWindow¶ó´Â window class°¡ µî·ÏµÅ ÀÖ°í, ÇöÀç ½ÇÇà ÁßÀÌ´Ù.
+            IntPtr hwndRcvr = Win32.FindWindow(null, "ReceiverWindow"); // ReceiverWindowë¼ëŠ” window classê°€ ë“±ë¡ë¼ ìˆê³ , í˜„ì¬ ì‹¤í–‰ ì¤‘ì´ë‹¤.
              
             CustomData data = new CustomData();
 
@@ -466,7 +466,7 @@ namespace Microsoft.BotBuilderSamples
 
             COPYDATASTRUCT cds = new COPYDATASTRUCT();
 
-            cds.cbData = Marshal.SizeOf(data);    // ±×³É sizeof¸¦ ¾²¸é ¾È µÇ°í, Marshal.SizeOf¸¦ ½á¾ß ÇÑ´Ù.
+            cds.cbData = Marshal.SizeOf(data);    // ê·¸ëƒ¥ sizeofë¥¼ ì“°ë©´ ì•ˆ ë˜ê³ , Marshal.SizeOfë¥¼ ì¨ì•¼ í•œë‹¤.
 
             cds.lpData = Marshal.AllocCoTaskMem(cds.cbData);
 
@@ -491,8 +491,8 @@ namespace Microsoft.BotBuilderSamples
 
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
-                //MySqlDataAdapter Å¬·¡½º¸¦ ÀÌ¿ëÇÏ¿©
-                //ºñ¿¬°á ¸ğµå·Î µ¥ÀÌÅ¸ °¡Á®¿À±â
+                //MySqlDataAdapter í´ë˜ìŠ¤ë¥¼ ì´ìš©í•˜ì—¬
+                //ë¹„ì—°ê²° ëª¨ë“œë¡œ ë°ì´íƒ€ ê°€ì ¸ì˜¤ê¸°
                 //string sql = "SELECT * FROM Tab1 WHERE Id>=2";
                 MySqlDataAdapter adpt = new MySqlDataAdapter(sql, conn);
                 adpt.Fill(ds, "mapping_table");
